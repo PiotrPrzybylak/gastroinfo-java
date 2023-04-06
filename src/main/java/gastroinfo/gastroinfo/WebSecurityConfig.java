@@ -25,7 +25,7 @@ public class WebSecurityConfig {
                 .and()
                 .logout()
                 .and()
-                .csrf().disable();
+                .csrf().ignoringRequestMatchers("/api/**");
         return http.build();
     }
 
