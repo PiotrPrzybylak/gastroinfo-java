@@ -27,7 +27,17 @@ public class HelloController {
 
     @GetMapping({"/lunches/{town}", "/lunches", "/lunches/"})
     public String lunches(Model model, LocalDate date, @PathVariable(required = false) String town) {
+        displayLunches(model, date);
+        return "hello";
+    }
 
+    @GetMapping({"/lunches-new/{town}"})
+    public String lunchesNew(Model model, LocalDate date, @PathVariable(required = false) String town) {
+        displayLunches(model, date);
+        return "hello-new";
+    }
+
+    private void displayLunches(Model model, LocalDate date) {
         if (date == null) {
             date = LocalDate.now();
         }
@@ -50,7 +60,6 @@ public class HelloController {
             zones.computeIfAbsent((String) offer.get("zone"), (k) -> new ArrayList<>()).add(offer);
         }
         model.addAttribute("zones", zones.entrySet().stream().map((e) -> Map.of("name", e.getKey(), "offers", e.getValue())));
-        return "hello";
     }
 
     @GetMapping("/rankings")

@@ -1,16 +1,13 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 
     <title>Łódź, co macie na lunch?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118568576-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'UA-118568576-1');
@@ -19,20 +16,24 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-image: url(/background2.jpg);
+            background-image: url("/background.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
+        }
+        h1 {
+            text-align: center;
+            opacity: 1;
+            padding: 20px;
+            margin: 0;
+            padding-bottom: 0;
+        }
+
+        h5 {
+            text-align: center;
         }
 
         .dania1 {
@@ -40,7 +41,7 @@
             background-color: rgba(255, 255, 255, 0.9);
             /* min-width: 300px; */
             min-width: 100%;
-            text-align: center;
+            float: left;
 
         }
 
@@ -54,167 +55,96 @@
 
         }
 
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        .zone-name h5 {
+            margin: 10px 0;
+        }
+
+        .dania2 {
+            margin-bottom: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            float: left;
+            min-width: 100%;
+        }
+
+        .dania3 {
+            margin-top: 5px    ;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            float: left;
+            min-width: 100%;
+        }
+
+        .content {
             padding: 20px;
+            width: fit-content;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        th {
+            font-size: x-large;
         }
 
-        .card {
-            margin: 10px;
-            background-color: #f5dcba;
-            border-radius: 10px;
-            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            width: 300px;
-            height: auto;
-            transition: transform 0.2s ease-in-out;
-            cursor: pointer;
+        td {
+            font-size: large;
         }
 
-        .card:hover {
-            transform: scale(1.05);
+        .restaurant .details {
+            display: inline;
         }
 
-        .card img {
-            display: block;
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+        .restaurant:hover .details {
+            display: inline;
         }
 
-        .info {
-            padding: 10px;
+        .details {
+            font-size: small;
+            font-weight: normal;
         }
 
-        .info h2 {
-            font-size: 24px;
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-
-        .info p {
-            font-size: 16px;
-            margin: 0;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        .description {
-            height: 70px;
-        }
-
-        .price {
-            font-size: 20px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .action-item {
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            border-radius: 5px;
-            width: 240px;
-        }
-
-        .action-item span {
-            margin-left: 5px;
-            font-size: 14px;
-        }
-
-        .lunch-hours {
-            background-color: #b59a04;
-            color: #fff;
-        }
-
-        .phone {
-            background-color: #055ab5;
-            color: #fff;
-        }
-
-        .delivery {
-            background-color: #04a329;
-            color: #fff;
-        }
-
-        .address {
-            background-color: #7e04a3;
-            color: #fff;
-        }
-
-        a {
-            text-decoration: none;
-        }
     </style>
 </head>
-
 <body>
 
 
-    <div class="content">
+<div class="content">
 
 
-        <div class="dania1">
-            <h1>W ŁODZI NA LUNCH MAMY:</h1>
-            <h4 th:text="${date}">2001-01-01</h4>
-        </div>
+    <div class="dania1"><h1>W ŁODZI NA LUNCH MAMY:</h1><h5 th:text="${date}">2001-01-01</h5></div>
 
-        <div th:each="zone: ${zones}">
-            <!-- <div class="zone-name">
-                <h5 th:text="${zone.name}"></h5>
-            </div> -->
-            <div class="menu">
-                <div class="card" th:each="offer: ${zone.offers}">
-                    <img src="https://picsum.photos/id/292/400/300">
-                    <div class="info">
-                        <a href="#" th:href="'/place/' + ${offer.place_id}"><h2 th:text="${offer.name}">DOKI</h2></a>
-                        <p class="description" th:text="${offer.description}">Grzybowa z makaronem. Schabowy z frytkami i surówką.</p>
-                        <p class="price"><span th:text="${offer.price}">99.99</span>&nbsp;PLN</p>
-                        <div class="actions">
-                            <div class="action-item lunch-hours">
-                                <i class="material-icons">access_time</i>
-                                <span th:if="${offer.lunch_served_from ne null and offer.lunch_served_until ne null}">
-                                    <span th:text="${#dates.format(offer.lunch_served_from, 'HH:mm')+ '-' + #dates.format(offer.lunch_served_until, 'HH:mm')}">11:00-16:00</span>
-                                </span>
-                            </div>
-                            <a th:href="'tel:'+${offer.phone}">
-                                <div class="action-item phone">
-                                    <i class="material-icons">call</i>
-                                    <span th:text="${offer.phone}">500 200 300</span>
-                                </div>
-                            </a>
-                            <div class="action-item delivery">
-                                <i class="material-icons">local_shipping</i>
-                                <span>Dostawa:</span>
-                                <span th:text="${offer.lunch_delivery == null ? '?' : (offer.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span>
-                            </div>
-                            <div class="action-item address">
-                                <i class="material-icons">place</i>
-                                <span th:text="${offer.address}">OFF Piotrkowska</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- <div style="text-align: center" class="dania3"><a href="https://lancze.herokuapp.com/restaurant/edit">Dodaj menu</a> -->
+    <div th:each="zone: ${zones}">
+        <div class="zone-name"><h5 th:text="${zone.name}"></h5></div>
+        <div class="dania2" th:each="offer: ${zone.offers}">
+            <table class="table">
+                <tr>
+                    <th class="restaurant">
+                        <span><a href="#" th:href="'/place/' + ${offer.place_id}" th:text="${offer.name}">Kolorowa</a></span>
+                        <span class="details">
+                            <br/>
+                            <span th:text="${offer.address}">123 Some Street</span>
+                            <a th:href="'tel:'+${offer.phone}" th:text="${offer.phone}">123-123-123</a>
+                            <span th:if="${offer.lunch_served_from ne null and offer.lunch_served_until ne null}">Godziny serwowania lunchy:
+                                <span th:text="${#dates.format(offer.lunch_served_from, 'HH:mm')+ '-' + #dates.format(offer.lunch_served_until, 'HH:mm')}">11:00-16:00</span>
+                            </span>
+                            Dostawa: <span th:text="${offer.lunch_delivery == null ? '?' : (offer.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span>
+                        </span>
+                    </th>
+                    <th style="text-align: right;"><span th:text="${offer.price}">99.99</span>&nbsp;PLN</th>
+                </tr>
+                <tr>
+                    <td colspan="2" th:utext="${offer.description}">Example offer....</td>
+                </tr>
+            </table>
         </div>
     </div>
+
+
+    <div style="text-align: center" class="dania3"><a href="https://lancze.herokuapp.com/restaurant/edit">Dodaj menu</a>
+    </div>
+
+    <div style='clear:both'></div>
+
+</div>
 </body>
 
 
