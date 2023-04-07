@@ -81,8 +81,14 @@
             margin: 0 auto;
             max-width: 1000px;
         }
+
         th {
             font-size: x-large;
+        }
+
+        .lunch-hours {
+            font-size: medium;
+            font-weight: normal;
         }
 
         td {
@@ -119,15 +125,10 @@
                 <tr>
                     <th class="restaurant">
                         <span><a href="#" th:href="'/place/' + ${offer.place_id}" th:text="${offer.name}">Kolorowa</a></span>
-                        <span class="details">
-                            <br/>
-                            <span th:text="${offer.address}">123 Some Street</span>
-                            <a th:href="'tel:'+${offer.phone}" th:text="${offer.phone}">123-123-123</a>
-                            <span th:if="${offer.lunch_served_from ne null and offer.lunch_served_until ne null}">Godziny serwowania lunchy:
-                                <span th:text="${#dates.format(offer.lunch_served_from, 'HH:mm')+ '-' + #dates.format(offer.lunch_served_until, 'HH:mm')}">11:00-16:00</span>
-                            </span>
-                            Dostawa: <span th:text="${offer.lunch_delivery == null ? '?' : (offer.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span>
-                        </span>
+                        <span class="lunch-hours"
+                              th:if="${offer.lunch_served_from ne null and offer.lunch_served_until ne null}"
+                              th:text="${#dates.format(offer.lunch_served_from, 'HH:mm')+ '-' + #dates.format(offer.lunch_served_until, 'HH:mm')}"
+                        >11:00-16:00</span>
                     </th>
                     <th style="text-align: right;"><span th:text="${offer.price}">99.99</span>&nbsp;PLN</th>
                 </tr>
