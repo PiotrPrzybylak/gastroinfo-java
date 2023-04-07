@@ -130,7 +130,7 @@
                               th:text="${#dates.format(offer.lunch_served_from, 'HH:mm')+ '-' + #dates.format(offer.lunch_served_until, 'HH:mm')}"
                         >11:00-16:00</span>
                     </th>
-                    <th style="text-align: right;"><span th:text="${offer.price}">99.99</span>&nbsp;PLN</th>
+                    <th th:if="${offer.price ne null}" style="text-align: right;"><span th:text="${offer.price}">99.99</span>&nbsp;PLN</th>
                 </tr>
                 <tr>
                     <td colspan="2" th:utext="${offer.description}">Example offer....</td>
