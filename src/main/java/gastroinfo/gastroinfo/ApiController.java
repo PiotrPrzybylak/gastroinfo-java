@@ -2,6 +2,7 @@ package gastroinfo.gastroinfo;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,11 +33,13 @@ public class ApiController {
 
     @PutMapping("/places/{id}/lunches/{date}")
     public void saveOffer(@PathVariable("id") int placeId, @PathVariable LocalDate date, @RequestBody Offer offer, @AuthenticationPrincipal PlaceUser user) {
-        System.out.println(user);
-        System.out.println(user.getId());
-        System.out.println(placeId);
-        System.out.println(date);
-        System.out.println(offer.description);
+
+        if (placeId != user.getId()) {
+            throw new AccessDeniedException("Can't change other places' data");
+        }
+
+        jdbc.update("delete from offers where place_id = ? and date = ?", placeId, date);
+        jdbc.update("insert into offers (place_id, date, offer, price) values (?, ?, ?, ?)", placeId, date, offer.description, offer.price);
     }
 
     @GetMapping("/places/{id}/lunches/")
