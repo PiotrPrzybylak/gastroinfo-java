@@ -1,5 +1,7 @@
 package gastroinfo.gastroinfo;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +18,8 @@ import java.util.List;
 public class ApiController {
 
     @PutMapping("/places/{id}/lunches/{date}")
-    public void saveOffer(@PathVariable("id") int placeId, @PathVariable LocalDate date,  @RequestBody Offer offer) {
+    public void saveOffer(@PathVariable("id") int placeId, @PathVariable LocalDate date, @RequestBody Offer offer, @AuthenticationPrincipal UserDetails user) {
+        System.out.println(user);
         System.out.println(placeId);
         System.out.println(date);
         System.out.println(offer.description);
