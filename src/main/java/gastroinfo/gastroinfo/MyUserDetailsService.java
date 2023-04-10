@@ -2,6 +2,7 @@ package gastroinfo.gastroinfo;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +21,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        var user = jdbc.queryForMap("select * from places where username = ?", username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
+        try {
+            var user = jdbc.queryForMap("select * from places where username = ?", username);
+            List<GrantedAuthority> authorities = Collections.emptyList();
+            return new PlaceUser((String) user.get("username"), (String) user.get("password"), authorities, ((Long) user.get("id")));
+        } catch (EmptyResultDataAccessException e) {
+            throw new UsernameNotFoundException("aaaaaa");
         }
-        List<GrantedAuthority> authorities = Collections.emptyList();
-        return new org.springframework.security.core.userdetails.User((String) user.get("username"), (String) user.get("password"), authorities);
     }
 }
