@@ -9,12 +9,19 @@ public class PlaceUser extends User {
 
     private final Long id;
 
-    public PlaceUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long id) {
+    private final String name;
+
+    public PlaceUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long id, String name) {
         super(username, password, authorities);
         this.id = id;
+        this.name = name;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

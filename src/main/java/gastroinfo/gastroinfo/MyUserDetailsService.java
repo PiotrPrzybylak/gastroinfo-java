@@ -24,9 +24,9 @@ public class MyUserDetailsService implements UserDetailsService {
         try {
             var user = jdbc.queryForMap("select * from places where username = ?", username);
             List<GrantedAuthority> authorities = Collections.emptyList();
-            return new PlaceUser((String) user.get("username"), (String) user.get("password"), authorities, ((Long) user.get("id")));
+            return new PlaceUser((String) user.get("username"), (String) user.get("password"), authorities, ((Long) user.get("id")), (String) user.get("name"));
         } catch (EmptyResultDataAccessException e) {
-            throw new UsernameNotFoundException("aaaaaa");
+            throw new UsernameNotFoundException(username);
         }
     }
 }
