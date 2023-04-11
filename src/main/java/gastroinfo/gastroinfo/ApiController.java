@@ -39,7 +39,7 @@ public class ApiController {
             throw new AccessDeniedException("Can't change other places' data");
         }
 
-        offer.description = HtmlUtils.htmlEscape(offer.description);
+        offer.description = HtmlUtils.htmlEscape(offer.description).replaceAll("\n", "<br/>");
 
         jdbc.update("delete from offers where place_id = ? and date = ?", placeId, date);
         jdbc.update("insert into offers (place_id, date, offer, price) values (?, ?, ?, ?)", placeId, date, offer.description, offer.price);
