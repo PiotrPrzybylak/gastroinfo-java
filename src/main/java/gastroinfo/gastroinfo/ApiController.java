@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.HtmlUtils;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -37,6 +38,8 @@ public class ApiController {
         if (placeId != user.getId()) {
             throw new AccessDeniedException("Can't change other places' data");
         }
+
+        offer.description = HtmlUtils.htmlEscape(offer.description);
 
         jdbc.update("delete from offers where place_id = ? and date = ?", placeId, date);
         jdbc.update("insert into offers (place_id, date, offer, price) values (?, ?, ?, ?)", placeId, date, offer.description, offer.price);
