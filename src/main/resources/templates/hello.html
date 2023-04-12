@@ -135,6 +135,14 @@
                 <tr>
                     <td colspan="2" th:text="${offer.description}" style="white-space: pre-wrap">Example offer....</td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <img style="width: 80px; padding-left: 20px;" th:src="${picture.url}" th:each="picture : ${offer.pictures}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:utext="${offer.description}"><span>Example offer....</td>
+                </tr>
             </table>
         </div>
     </div>

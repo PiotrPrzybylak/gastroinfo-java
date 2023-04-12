@@ -36,5 +36,14 @@ create table if not exists rankings
 alter table places
     add description text;
 
+create table public.lunch_pictures
+(
+    id       serial
+        constraint lunch_pictures_pk
+            primary key,
+    url      text,
+    offer_id integer
+);
+
 
 

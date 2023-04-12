@@ -44,6 +44,7 @@ public class HelloController {
         model.addAttribute("date", date);
         List<Map<String, Object>> offers = jdbc.queryForList("""
                 select
+                offers.id,
                 offer as description,
                 price,
                 name,
@@ -58,6 +59,8 @@ public class HelloController {
         Map<String, List<Map<String, Object>>> zones = new HashMap<>();
         for (Map<String, Object> offer : offers) {
             zones.computeIfAbsent((String) offer.get("zone"), (k) -> new ArrayList<>()).add(offer);
+            var pictures = jdbc.queryForList("select * from lunch_pictures where offer_id = ?", offer.get("id"));
+            offer.put("pictures", pictures);
         }
         model.addAttribute("zones", zones.entrySet().stream().map((e) -> Map.of("name", e.getKey(), "offers", e.getValue())));
     }
