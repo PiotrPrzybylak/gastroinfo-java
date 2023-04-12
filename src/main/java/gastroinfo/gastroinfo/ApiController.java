@@ -59,7 +59,7 @@ public class ApiController {
         List<Offer> result = new ArrayList<>();
         for (Map<String, Object> offer : offers) {
             Offer offerDto = new Offer();
-            offerDto.description = (String) offer.get("offer");
+            offerDto.description = ((String) offer.get("offer")).replaceAll("<br/>", "\n");
             offerDto.price = (BigDecimal) offer.get("price");
             offerDto.date = ((Date) offer.get("date")).toLocalDate();
             result.add(offerDto);
