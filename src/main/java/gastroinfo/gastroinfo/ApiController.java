@@ -39,8 +39,6 @@ public class ApiController {
             throw new AccessDeniedException("Can't change other places' data");
         }
 
-        offer.description = HtmlUtils.htmlEscape(offer.description).replaceAll("\n", "<br/>");
-
         jdbc.update("delete from offers where place_id = ? and date = ?", placeId, date);
         jdbc.update("insert into offers (place_id, date, offer, price) values (?, ?, ?, ?)", placeId, date, offer.description, offer.price);
     }
@@ -59,7 +57,7 @@ public class ApiController {
         List<Offer> result = new ArrayList<>();
         for (Map<String, Object> offer : offers) {
             Offer offerDto = new Offer();
-            offerDto.description = ((String) offer.get("offer")).replaceAll("<br/>", "\n");
+            offerDto.description = ((String) offer.get("offer"));
             offerDto.price = (BigDecimal) offer.get("price");
             offerDto.date = ((Date) offer.get("date")).toLocalDate();
             result.add(offerDto);
