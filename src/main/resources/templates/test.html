@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <title>Łódź, co macie na lunch?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118568576-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-118568576-1');
+    </script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <style>
+        body {
+            background-image: url("/background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        h1 {
+            text-align: center;
+            opacity: 1;
+            padding: 20px;
+            margin: 0;
+            padding-bottom: 0;
+        }
+
+        h5 {
+            text-align: center;
+        }
+
+        .dania1 {
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            min-width: 100%;
+            float: left;
+
+        }
+
+        .zone-name {
+            margin-bottom: 5px;
+            margin-top: 5px ;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            min-width: 100%;
+            float: left;
+
+        }
+
+        .zone-name h5 {
+            margin: 10px 0;
+        }
+
+        .dania2 {
+            margin-bottom: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            float: left;
+            min-width: 100%;
+        }
+
+        .dania3 {
+            margin-top: 5px    ;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* min-width: 300px; */
+            float: left;
+            min-width: 100%;
+        }
+
+        .content {
+            padding: 20px;
+            width: fit-content;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        th {
+            font-size: x-large;
+        }
+
+        td {
+            font-size: large;
+        }
+
+        .details {
+            font-size: small;
+            font-weight: normal;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="content">
+
+
+        <div class="dania2" >
+            <table class="table">
+                <tr>
+                    <th class="restaurant">
+                        <span>Test page</span>
+                    </th>
+                    <th style="text-align: right;"></th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div th:each="var : ${#vars.getVariableNames()}"><span th:text="${var}">Adres</span>: <span th:text="${#vars.getVariable(var)}">123 Some Street</span></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+    <div style='clear:both'></div>
+
+</div>
+</body>
+
+
+</html>

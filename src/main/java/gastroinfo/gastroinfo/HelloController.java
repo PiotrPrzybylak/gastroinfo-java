@@ -1,13 +1,19 @@
 package gastroinfo.gastroinfo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.CloseableThreadContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,5 +121,19 @@ public class HelloController {
         var place = jdbc.queryForMap("select * from places where id = ?", id);
         model.addAttribute("place", place);
         return "place";
+    }
+
+    @GetMapping("/test")
+    public String test(Model model, HttpServletRequest req) {
+        model.addAttribute("test__date", LocalDate.now());
+        model.addAttribute("test__datetime", LocalDateTime.now());
+        model.addAttribute("test__zoneddatetime", ZonedDateTime.now());
+        model.addAttribute("test__ZoneId.systemDefault()", ZoneId.systemDefault());
+        model.addAttribute("test__warsawdatetime", LocalDateTime.now(ZoneId.of("Europe/Warsaw")));
+        model.addAttribute("test__warsawdate", LocalDate.now(ZoneId.of("Europe/Warsaw")));
+        model.addAttribute("test__instant", Instant.now());
+        model.addAttribute("test__localaddress", req.getLocalAddr());
+        model.addAttribute("test__localport", req.getLocalPort());
+        return "test";
     }
 }
