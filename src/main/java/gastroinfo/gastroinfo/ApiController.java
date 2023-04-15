@@ -72,7 +72,7 @@ from offers left join lunch_pictures on offers.place_id = lunch_pictures.place_i
     @GetMapping("/lunches/{id}/pictures")
     public List<OfferPicture> showPictures(@PathVariable("id") int offerId) {
 
-        var pictures = jdbc.queryForList("select lunch_pictures.id, url from lunch_pictures join offers on lunch_pictures.place_id = offers.place_id  and lunch_pictures.date = offers.date where offer_id = ?", offerId);
+        var pictures = jdbc.queryForList("select lunch_pictures.id, url from lunch_pictures join offers on lunch_pictures.place_id = offers.place_id  and lunch_pictures.date = offers.date where offers.id = ?", offerId);
 
         List<OfferPicture> result = new ArrayList<>();
         for (Map<String, Object> picture : pictures) {
