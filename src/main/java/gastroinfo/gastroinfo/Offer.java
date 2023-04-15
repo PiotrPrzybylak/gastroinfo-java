@@ -12,4 +12,6 @@ public class Offer {
     public BigDecimal price;
 
     public LocalDate date;
+
+    public Long pictures_count;
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.HtmlUtils;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -48,12 +47,13 @@ public class ApiController {
 
 
         List<Map<String, Object>> offers = jdbc.queryForList("""
-                select
-                id,
-                offer,
-                price,
-                date
-                from offers where place_id = ? and date between ? and ? order by date""", placeId, dateFrom, dateTo);
+select
+    offers.id,
+    offer,
+    price,
+    date,
+    count(lunch_pictures.id) as pictures_count
+from offers left join lunch_pictures on offers.id = lunch_pictures.offer_id where place_id = ? and date between ? and ? group by offers.id order by offers.date""", placeId, dateFrom, dateTo);
 
         List<Offer> result = new ArrayList<>();
         for (Map<String, Object> offer : offers) {
@@ -62,6 +62,7 @@ public class ApiController {
             offerDto.description = ((String) offer.get("offer"));
             offerDto.price = (BigDecimal) offer.get("price");
             offerDto.date = ((Date) offer.get("date")).toLocalDate();
+            offerDto.pictures_count = ((Long) offer.get("pictures_count"));
             result.add(offerDto);
 
         }
