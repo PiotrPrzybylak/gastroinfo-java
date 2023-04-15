@@ -51,9 +51,9 @@ select
     offers.id,
     offer,
     price,
-    date,
+    offers.date,
     count(lunch_pictures.id) as pictures_count
-from offers left join lunch_pictures on offers.id = lunch_pictures.offer_id where place_id = ? and date between ? and ? group by offers.id order by offers.date""", placeId, dateFrom, dateTo);
+from offers left join lunch_pictures on offers.place_id = lunch_pictures.place_id and offers.date = lunch_pictures.date where offers.place_id = ? and offers.date between ? and ? group by offers.id order by offers.date""", placeId, dateFrom, dateTo);
 
         List<Offer> result = new ArrayList<>();
         for (Map<String, Object> offer : offers) {
@@ -72,7 +72,7 @@ from offers left join lunch_pictures on offers.id = lunch_pictures.offer_id wher
     @GetMapping("/lunches/{id}/pictures")
     public List<OfferPicture> showPictures(@PathVariable("id") int offerId) {
 
-        var pictures = jdbc.queryForList("select * from lunch_pictures where offer_id = ?", offerId);
+        var pictures = jdbc.queryForList("select lunch_pictures.id, url from lunch_pictures join offers on lunch_pictures.place_id = offers.place_id  and lunch_pictures.date = offers.date where offer_id = ?", offerId);
 
         List<OfferPicture> result = new ArrayList<>();
         for (Map<String, Object> picture : pictures) {

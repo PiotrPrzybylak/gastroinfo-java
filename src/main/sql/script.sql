@@ -42,7 +42,8 @@ create table public.lunch_pictures
         constraint lunch_pictures_pk
             primary key,
     url      text,
-    offer_id integer
+    place_id integer,
+    date     date
 );
 
 
