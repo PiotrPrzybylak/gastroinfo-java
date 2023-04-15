@@ -362,7 +362,7 @@ ol, li {
                 <tr>
                     <td colspan="2" th:text="${offer.description}" style="white-space: pre-wrap">Example offer....</td>
                 </tr>
-                <tr>
+                <tr th:if="${!offer.pictures.empty}">
                     <td colspan="2">
                       <section class="carousel" aria-label="Gallery">
                         <ol class="carousel__viewport">
