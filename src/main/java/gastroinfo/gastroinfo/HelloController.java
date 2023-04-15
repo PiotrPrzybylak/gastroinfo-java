@@ -23,6 +23,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class HelloController {
 
+    private final ZoneId DEFAULT_TIMEZONE = ZoneId.of("Europe/Warsaw");
+
     private final JdbcTemplate jdbc;
 
     @GetMapping("/")
@@ -45,7 +47,7 @@ public class HelloController {
 
     private void displayLunches(Model model, LocalDate date) {
         if (date == null) {
-            date = LocalDate.now();
+            date = LocalDate.now(DEFAULT_TIMEZONE);
         }
         model.addAttribute("date", date);
         List<Map<String, Object>> offers = jdbc.queryForList("""
