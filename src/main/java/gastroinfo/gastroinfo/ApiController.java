@@ -49,6 +49,7 @@ public class ApiController {
 
         List<Map<String, Object>> offers = jdbc.queryForList("""
                 select
+                id,
                 offer,
                 price,
                 date
@@ -57,11 +58,27 @@ public class ApiController {
         List<Offer> result = new ArrayList<>();
         for (Map<String, Object> offer : offers) {
             Offer offerDto = new Offer();
+            offerDto.id = ((Long) offer.get("id"));
             offerDto.description = ((String) offer.get("offer"));
             offerDto.price = (BigDecimal) offer.get("price");
             offerDto.date = ((Date) offer.get("date")).toLocalDate();
             result.add(offerDto);
 
+        }
+        return result;
+    }
+
+    @GetMapping("/lunches/{id}/pictures")
+    public List<OfferPicture> showPictures(@PathVariable("id") int offerId) {
+
+        var pictures = jdbc.queryForList("select * from lunch_pictures where offer_id = ?", offerId);
+
+        List<OfferPicture> result = new ArrayList<>();
+        for (Map<String, Object> picture : pictures) {
+            OfferPicture pictureDto = new OfferPicture();
+            pictureDto.id = ((Integer) picture.get("id"));
+            pictureDto.url = ((String) picture.get("url"));
+            result.add(pictureDto);
         }
         return result;
     }
