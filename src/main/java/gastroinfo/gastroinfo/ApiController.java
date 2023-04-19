@@ -6,6 +6,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,5 +84,16 @@ from offers left join lunch_pictures on offers.place_id = lunch_pictures.place_i
         }
         return result;
     }
+
+    @PostMapping("/places/{id}/lunches/{date}/pictures")
+    public void addPicture(@PathVariable("id") int placeId, @PathVariable LocalDate date, @RequestBody OfferPicture picture, @AuthenticationPrincipal PlaceUser user) {
+
+        if (placeId != user.getId()) {
+            throw new AccessDeniedException("Can't change other places' data");
+        }
+
+        jdbc.update("insert into lunch_pictures (place_id, date, url) values (?, ?, ?)", placeId, date, picture.url);
+    }
+
 
 }
