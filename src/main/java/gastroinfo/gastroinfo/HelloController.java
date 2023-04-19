@@ -125,7 +125,7 @@ public class HelloController {
 
         var openingHours = jdbc.queryForList("select * from place_opening_hours where place_id = ? order by weekday", id);
         for (Map<String, Object> day : openingHours) {
-            day.put("weekdayName", WEEKDAYS[(Integer) day.get("weekday")]);
+            day.put("weekdayName", WEEKDAYS[(Integer) day.get("weekday") - 1]);
         }
         place.put("openingHours", openingHours);
 
