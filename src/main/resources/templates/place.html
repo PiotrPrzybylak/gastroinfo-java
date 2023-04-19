@@ -117,7 +117,15 @@
                         <div th:if="${place.lunch_served_from ne null and place.lunch_served_until ne null}">Godziny serwowania lunchy:
                                 <span th:text="${#dates.format(place.lunch_served_from, 'HH:mm')+ '-' + #dates.format(place.lunch_served_until, 'HH:mm')}">11:00-16:00</span>
                         </div>
-                        <div>Dostawa: <span th:text="${place.lunch_delivery == null ? '?' : (place.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span></div>
+<!--                        <div>Dostawa: <span th:text="${place.lunch_delivery == null ? '?' : (place.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span></div>-->
+                        <div>Godziny otwarcia:
+                            <ul>
+                                <li th:each="day : ${place.openingHours}">
+                                    <span th:text="${day.weekdayName}">Poniedziałek:</span>
+                                    <span th:text="${#dates.format(day.from, 'HH:mm')+ '-' + #dates.format(day.to, 'HH:mm')}"></span>
+                                </li>
+                            </ul>
+                        </div>
                         <div th:text="${place.description}" >Example offer....</div>
 
                     </td>

@@ -46,5 +46,17 @@ create table public.lunch_pictures
     date     date
 );
 
+create table public.place_opening_hours
+(
+    id       serial
+        constraint place_opening_hours_pk
+            primary key,
+    weekday  integer,
+    "from"   time,
+    "to"     time,
+    place_id integer
+);
+
+
 
 

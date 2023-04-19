@@ -2,7 +2,6 @@ package gastroinfo.gastroinfo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.CloseableThreadContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +23,8 @@ import java.util.Map;
 public class HelloController {
 
     private final ZoneId DEFAULT_TIMEZONE = ZoneId.of("Europe/Warsaw");
+
+    private final String[] WEEKDAYS = {"Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"};
 
     private final JdbcTemplate jdbc;
 
@@ -121,6 +122,13 @@ public class HelloController {
     @GetMapping("/place/{id}")
     public String rankings(Model model, @PathVariable int id) {
         var place = jdbc.queryForMap("select * from places where id = ?", id);
+
+        var openingHours = jdbc.queryForList("select * from place_opening_hours where place_id = ? order by weekday", id);
+        for (Map<String, Object> day : openingHours) {
+            day.put("weekdayName", WEEKDAYS[(Integer) day.get("weekday")]);
+        }
+        place.put("openingHours", openingHours);
+
         model.addAttribute("place", place);
         return "place";
     }
