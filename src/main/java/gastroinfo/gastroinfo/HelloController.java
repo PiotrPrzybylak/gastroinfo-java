@@ -28,13 +28,8 @@ public class HelloController {
 
     private final JdbcTemplate jdbc;
 
-    @GetMapping("/")
-    public String home() {
-        return "redirect:/lunches/lodz";
-    }
 
-
-    @GetMapping({"/lunches/{town}", "/lunches", "/lunches/"})
+    @GetMapping({"/lunches/{town}", "/lunches", "/lunches/", "/"})
     public String lunches(Model model, LocalDate date, @PathVariable(required = false) String town) {
         displayLunches(model, date);
         return "hello";
