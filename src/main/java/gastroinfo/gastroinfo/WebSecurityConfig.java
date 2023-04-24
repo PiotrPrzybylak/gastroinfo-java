@@ -16,9 +16,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                                .requestMatchers("/api/**", "/yummy-town-admin/**")
-                                .hasAuthority("ROLE_PLACE")
-                                .anyRequest().permitAll()
+                        .requestMatchers("/api/**", "/yummy-town-admin/**")
+                        .hasAuthority("ROLE_PLACE")
+                        .requestMatchers("/rankings/*/edit")
+                        .hasAuthority("ROLE_USER")
+                        .anyRequest().permitAll()
                 )
                 .formLogin()
                 .permitAll()
