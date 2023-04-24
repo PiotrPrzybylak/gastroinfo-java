@@ -17,7 +17,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                                 .requestMatchers("/api/**", "/yummy-town-admin/**")
-                                .authenticated()
+                                .hasAuthority("ROLE_PLACE")
                                 .anyRequest().permitAll()
                 )
                 .formLogin()

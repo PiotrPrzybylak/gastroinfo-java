@@ -58,5 +58,17 @@ create table public.place_opening_hours
 );
 
 
+create table public.users
+(
+    id       serial
+        constraint users_pk
+            primary key,
+    email    text,
+    password text
+);
+
+alter table public.rankings
+    add user_id integer;
+
 
 
