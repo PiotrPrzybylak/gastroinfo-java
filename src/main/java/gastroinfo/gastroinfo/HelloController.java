@@ -167,6 +167,51 @@ public class HelloController {
         return "edit-ranking";
     }
 
+    @GetMapping("/rankings/{id}")
+    public String show_ranking(Model model, @PathVariable long id) {
+
+        var restaurants = jdbc.queryForList("select * from places");
+        var ranking = jdbc.queryForMap("select * from rankings where id = ?", id);
+
+
+        var ranking_restaurants = new ArrayList<>();
+        var ids = ((String) ranking.get("restaurants_ids")).split(",");
+        for (int i = 0; i < ids.length; i++) {
+            for (Map<String, Object> restaurant : restaurants) {
+                if (ids[i].equals(restaurant.get("id") + "")) {
+
+                    List<Double> ratings = (List<Double>) restaurant.computeIfAbsent("ratings", (k) -> new ArrayList<Double>());
+                    var restaurant_ranking = new HashMap<>(restaurant);
+                    var rating = 1.0 - (i) / (ids.length - 1.0);
+                    restaurant_ranking.put("place", String.format("%.3f", rating));
+                    ranking_restaurants.add(restaurant_ranking);
+                    ratings.add(rating);
+                    break;
+                }
+            }
+        }
+        ranking.put("restaurants", ranking_restaurants);
+
+        for (var restaurant : restaurants) {
+            if (restaurant.containsKey("ratings")) {
+                List<Double> ratings = (List) restaurant.get("ratings");
+                double average = ratings.stream().mapToDouble(a -> a).average().getAsDouble();
+                restaurant.put("average", average);
+                restaurant.put("votes", ratings.size());
+            } else {
+                restaurant.put("average", 0d);
+                restaurant.put("votes", 0);
+            }
+        }
+
+        restaurants.sort((a, b) -> (int) ((((double) b.get("average")) - ((double) a.get("average"))) * 10000));
+
+        model.addAttribute("restaurants", restaurants);
+        model.addAttribute("ranking", ranking);
+
+        return "ranking";
+    }
+
     @GetMapping("/change_ranking")
     @ResponseBody
     public String changeRanking(@RequestParam("moved_item") int movedItem, @RequestParam("moved_before")  int movedBefore) {
