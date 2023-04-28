@@ -112,13 +112,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div>Adres: <span th:text="${place.address}">123 Some Street</span></div>
-                        <div>Telefon: <a th:href="'tel:'+${place.phone}" th:text="${place.phone}">123-123-123</a></div>
-                        <div th:if="${place.lunch_served_from ne null and place.lunch_served_until ne null}">Godziny serwowania lunchy:
+                        <div><b>Adres:</b> <span th:text="${place.address}">123 Some Street</span></div>
+                        <div><b>Telefon:</b> <a th:href="'tel:'+${place.phone}" th:text="${place.phone}">123-123-123</a></div>
+                        <div th:if="${place.lunch_served_from ne null and place.lunch_served_until ne null}"><b>Godziny serwowania lunchy:</b>
                                 <span th:text="${#dates.format(place.lunch_served_from, 'HH:mm')+ '-' + #dates.format(place.lunch_served_until, 'HH:mm')}">11:00-16:00</span>
                         </div>
 <!--                        <div>Dostawa: <span th:text="${place.lunch_delivery == null ? '?' : (place.lunch_delivery ? 'Tak' : 'Nie')}">Tak</span></div>-->
-                        <div>Godziny otwarcia:
+                        <div><b>Godziny otwarcia:</b>
                             <ul>
                                 <li th:each="day : ${place.openingHours}">
                                     <span th:text="${day.weekdayName}">Poniedziałek:</span>
